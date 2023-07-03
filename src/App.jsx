@@ -72,7 +72,7 @@ function App() {
     <>
       <div
         data-theme="dark"
-        className="w-screen bg-black h-screen  flex flex-col"
+        className="w-screen bg-black h-screen flex flex-col"
       >
         <div className="h-[10%] px-4 flex justify-between">
           <div className="text-white my-auto text-xl font font-semibold">
@@ -90,10 +90,10 @@ function App() {
             </label>
           </div>
         </div>
-        <div className="w-full h-full flex flex-col overflow-hidden p-4 lg:p-10 ">
-          <div className="w-full lg:h-full border mx-auto lg:m-auto border-primary p-4 py-10 rounded-md  transition ease-in-out  ">
-            <div className="w-full h-full overflow-y-auto ">
-              <div className="grid-cols-3	grid gap-4 mb-4 transition ease-in-out ">
+        <div className="w-full h-full flex flex-col overflow-hidden p-7 lg:p-10 ">
+          <div className="w-11/12  border mx-auto border-primary px-8 py-10 rounded-md lg:m-auto lg:h-full">
+            <div className="  h-full overflow-y-auto mx-auto">
+              <div className="grid-cols-3	grid gap-4 mb-4 mx-auto ">
                 {dummydata.map((value, index) => (
                   <Card
                     deleteClick={() => {
