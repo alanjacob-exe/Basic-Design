@@ -1,4 +1,4 @@
-export default function Card({ index, heading, content, deleteClick, style }) {
+export default function Card({ index, heading, content, deleteClick }) {
   return (
     <main
       className={
@@ -7,8 +7,8 @@ export default function Card({ index, heading, content, deleteClick, style }) {
           : "w-full bg-white border-primary border rounded-md overflow-hidden h-44  transition ease-in-out"
       }
     >
-      <div className="border h-10 w-full flex justify-between my-auto">
-        <div className="m-auto  text-black font-semibold text-md">
+      <div className="border h-10 w-full flex justify-between my-auto overflow-hidden">
+        <div className="m-auto  text-black font-semibold text-md overflow-hidden">
           {heading}
         </div>
         <div className="my-auto cursor-pointer" onClick={deleteClick}>
