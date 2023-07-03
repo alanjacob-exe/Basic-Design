@@ -1,6 +1,12 @@
-export default function Card({ index, heading, content, deleteClick }) {
+export default function Card({ index, heading, content, deleteClick, style }) {
   return (
-    <main className="w-full  bg-white border-primary border rounded-md overflow-hidden h-44  transition ease-in-out">
+    <main
+      className={
+        index == 6
+          ? "w-full bg-white border-primary border rounded-md overflow-hidden h-44 col-span-2 transition ease-in-out"
+          : "w-full bg-white border-primary border rounded-md overflow-hidden h-44  transition ease-in-out"
+      }
+    >
       <div className="border h-10 w-full flex justify-between my-auto">
         <div className="m-auto  text-black font-semibold text-md">
           {heading}

@@ -36,29 +36,35 @@ function App() {
         "Proin consequat, magna eu sagittis luctus, enim ex placerat nisl, vulputate condimentum dui dolor at orci. Donec at eros leo. Duis sodales, metus eu ultricies fermentum, elit enim condimentum lectus, a tristique magna augue et dolor. Nulla quis facilisis magna. Nulla et eros posuere, mattis leo in, pretium justo. Maecenas consequat libero vestibulum diam ornare convallis. Vestibulum sodales nec mauris vitae vulputate. Cras pretium augue ac sodales cursus. Duis id dictum mi. Maecenas a mattis eros. Fusce felis leo, laoreet fermentum orci eget, ullamcorper dignissim leo. Nunc urna magna, tincidunt id nibh sed, pretium suscipit augue. Mauris id hendrerit augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus sollicitudin tincidunt pretium.",
     },
   ]);
-  // console.log(...dummydata.)
+
   const handleToggleChange = () => {
     setDummyData([
       ...dummydata,
       {
-        heading: "What is Lorem Ipsum?",
+        heading: "Where does it come from?      ",
         description:
-          "Nulla lorem lacus, vulputate eu justo vitae, consectetur blandit lacus. Pellentesque id lacus vitae mi consequat gravida. Donec maximus auctor mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus mi eros, condimentum et est sed, scelerisque lacinia diam. Morbi ut ornare quam. Aliquam tristique lectus neque, non pharetra enim efficitur sit amet. Morbi scelerisque venenatis ipsum, mattis pellentesque tellus eleifend nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin vel dictum sem, sed ornare ligula. Quisque at sodales neque. Integer quis varius velit.",
+          "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
       },
       {
-        heading: "Why do we use it?",
+        heading: "Where can I get some?      ",
         description:
-          "Proin consequat, magna eu sagittis luctus, enim ex placerat nisl, vulputate condimentum dui dolor at orci. Donec at eros leo. Duis sodales, metus eu ultricies fermentum, elit enim condimentum lectus, a tristique magna augue et dolor. Nulla quis facilisis magna. Nulla et eros posuere, mattis leo in, pretium justo. Maecenas consequat libero vestibulum diam ornare convallis. Vestibulum sodales nec mauris vitae vulputate. Cras pretium augue ac sodales cursus. Duis id dictum mi. Maecenas a mattis eros. Fusce felis leo, laoreet fermentum orci eget, ullamcorper dignissim leo. Nunc urna magna, tincidunt id nibh sed, pretium suscipit augue. Mauris id hendrerit augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus sollicitudin tincidunt pretium.",
+          "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
       },
     ]);
   };
-  const handleClick = () => {
-    setChecked(!checked);
 
-    checked === false ? handleToggleChange() : null;
+  const handleClick = () => {
+    checked === false ? handleToggleChange() : handleDelete();
+    setChecked(!checked);
   };
 
-  const handleDelete = (params) => {
+  const handleDelete = () => {
+    setDummyData([
+      ...dummydata.filter((value, index) => index + 2 < dummydata.length),
+    ]);
+  };
+
+  const handlePop = (params) => {
     return dummydata.filter((item, index) => index != params);
   };
 
@@ -86,12 +92,12 @@ function App() {
         </div>
         <div className="w-full h-full flex flex-col overflow-hidden   p-10 ">
           <div className="w-11/12 h-full border m-auto border-primary p-4 py-10 rounded-md  transition ease-in-out  ">
-            <div className="w-full h-full overflow-y-auto transition ease-in-out">
+            <div className="w-full h-full overflow-y-auto ">
               <div className="grid-cols-3	grid gap-4 mb-4 transition ease-in-out ">
                 {dummydata.map((value, index) => (
                   <Card
                     deleteClick={() => {
-                      setDummyData([...handleDelete(index)]);
+                      setDummyData([...handlePop(index)]);
                     }}
                     index={index}
                     key={index}
