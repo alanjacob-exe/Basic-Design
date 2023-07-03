@@ -3,6 +3,8 @@ import Card from "./Components/card";
 
 function App() {
   const [checked, setChecked] = useState(false);
+  // const [toggleStyle, settoggleStyle] = useState("")
+  const togglestyle = "h-6 w-6 bg-white rounded-full my-auto";
 
   const [dummydata, setDummyData] = useState([
     {
@@ -68,6 +70,7 @@ function App() {
     return dummydata.filter((item, index) => index != params);
   };
 
+  console.log(checked);
   return (
     <>
       <div
@@ -79,18 +82,26 @@ function App() {
             Basic Design
           </div>
 
-          <div className="form-control my-auto ">
-            <label className="cursor-pointer label">
-              <input
+          <div className=" my-auto ">
+            <div className="w-16 overflow-hidden h-8  border rounded-full flex  bg-black  ">
+              <div
+                className={
+                  checked
+                    ? `${togglestyle} translate-x-9 bg-violet-700`
+                    : `${togglestyle} ml-1`
+                }
+                onClick={handleClick}
+              ></div>
+              {/* <input
                 type="checkbox"
-                onChange={handleClick}
+                // onChange={handleClick}
                 checked={checked}
-                className="toggle toggle-xl toggle-primary"
-              />
-            </label>
+                className=" border visibility-hidden"
+              /> */}
+            </div>
           </div>
         </div>
-        <div className="w-full h-full flex flex-col overflow-hidden p-7 lg:p-10 ">
+        <div className="w-full h-full flex flex-col  p-7 lg:p-10 ">
           <div className="w-11/12  border mx-auto border-primary px-8 py-10 rounded-md lg:m-auto lg:h-full">
             <div className="  h-full overflow-y-auto mx-auto">
               <div className="grid-cols-3	grid gap-4 mb-4 mx-auto ">
