@@ -9,7 +9,7 @@ export default function Card({
   keydown,
   keyup,
 }) {
-  const [showMore, setshowMore] = useState(false);
+  const [showMore, setshowMore] = useState(true);
   const [textAreaChange, settextAreaChange] = useState("");
   const [showEdit, setshowEdit] = useState(false);
 
@@ -81,12 +81,18 @@ export default function Card({
             }}
             className="w-full h-full"
           >
-            {!showMore ? content?.slice(0, 200) : content}
+            {/* showMore ? content?.slice(0, 200) : content */}
+            {content.length < 200
+              ? content
+              : showMore
+              ? content?.slice(0, 200)
+              : content}
             <a
               className="ml-1 text-blue-400 cursor-pointer"
               onClick={() => setshowMore(!showMore)}
             >
-              {showMore ? "Show less" : "...Show More"}
+              {/* {showMore ? "Show less" : "...Show More"} */}
+              {content.length < 200 ? "." : showMore ? "Show More" : "Show Less"}
             </a>
           </div>
         )}

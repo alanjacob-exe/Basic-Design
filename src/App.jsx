@@ -14,7 +14,7 @@ function App() {
       {
         heading: "1",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in magna. Donec vitae luctus diam. Nam sed pharetra augue, quis molestie nunc. Integer suscipit fermentum nisl, non mollis est condimentum a. Pellentesque neque neque, cursus at lacinia a, vestibulum eget libero. Cras eros urna, gravida id nisi non, rutrum sagittis sem. Nulla facilisi. Nam leo lorem, porttitor eget facilisis at, finibus eu est. Sed velit quam, tempus sit amet sodales quis, semper ut sapien",
+          "        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
       },
       {
         heading: "2",
@@ -48,12 +48,7 @@ function App() {
     ],
   ]);
 
-  // console.log(elements.length  );
   const [elements, setelements] = useState(dummydata[0]);
-  // useEffect(() => {
-  //   setcurrentPage(startIndex / 2);
-  //   // handleToggleUpdate();
-  // }, [startIndex, displayData]);
 
   const handleForwardChange = () => {
     if (currentPage <= dummydata.length - 1) {
@@ -186,7 +181,10 @@ function App() {
         <div className="w-full h-full    flex flex-col py-4   ">
           <div className="w-11/12 flex border mx-auto border-primary px-8 py-5 rounded-md lg:m-auto lg:h-full ">
             <div className="w-[5%] h-full  flex">
-              <div className="m-auto h-12  " onClick={handleBackwardsChange}>
+              <div
+                className="m-auto h-12 cursor-pointer"
+                onClick={handleBackwardsChange}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-arrow-left stroke-white hover:fill-white transition ease-in-out"
@@ -216,7 +214,10 @@ function App() {
               </div>
             </div>
             <div className="w-[5%] h-full  flex">
-              <div className="m-auto h-12" onClick={handleForwardChange}>
+              <div
+                className="m-auto h-12 cursor-pointer"
+                onClick={handleForwardChange}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-arrow-left stroke-white hover:fill-white transition ease-in-out"
