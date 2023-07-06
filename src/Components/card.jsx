@@ -27,7 +27,10 @@ export default function Card({
         <div className="m-auto  text-black font-semibold text-md ">
           {heading}
         </div>
-        <div className="my-auto cursor-pointer" onClick={deleteClick}>
+        <div
+          className="my-auto cursor-pointer"
+          onClick={deleteClick}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="icon icon-tabler icon-tabler-share hover:stroke-red-500 transition ease-in-out"

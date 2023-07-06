@@ -135,7 +135,24 @@ function App() {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          let k = [...value,...newArray];
+          let k = [...value, ...newArray];
+          setelements(k);
+          return k;
+        }
+        return value;
+      })
+    );
+  };
+
+  const handleCardDelete = (idx) => {
+    setDummyData((prevState) =>
+      prevState.map((value, index) => {
+        if (index == currentPage) {
+          let k = value.filter((value, index) => {
+            if (index != idx) {
+              return value;
+            }
+          });
           setelements(k);
           return k;
         }
@@ -179,9 +196,7 @@ function App() {
     // ]);
   };
 
-  const handlePop = (params) => {
-    // return displayData.filter((item, index) => index != params);
-  };
+  const handlePop = (params) => {};
 
   // const handleTextAreaChange = (e, idx) => {};
 
@@ -190,7 +205,7 @@ function App() {
     // if (e.keyCode == 13) {
     //   setDummyData((prevState) =>
     //     prevState.map((each, index) =>
-    //       index == idx ? { ...each, description: e.target.value } : each
+    //       index == idx ? { ...each, description: e.target.value } : 20
     //     )
     //   );
     //   console.log("Enter key pressed");
@@ -225,7 +240,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="w-full h-full    flex flex-col py-4   ">
+        <div className="w-full h-full    flex flex-col py-4  overflow-hidden ">
           <div className="w-11/12 flex border mx-auto border-primary px-8 py-5 rounded-md lg:m-auto lg:h-full ">
             <div className="w-[5%] h-full  flex">
               <div
@@ -235,7 +250,7 @@ function App() {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-arrow-left stroke-white hover:fill-white transition ease-in-out"
-                  width="44"
+                  width="20"
                   height="44"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
@@ -248,12 +263,14 @@ function App() {
                 </svg>
               </div>
             </div>
-            <div className="w-[90%] mx-auto h-full  flex p-2">
+            <div className="w-[90%] mx-auto h-full  overflow-hidden overflow-y-auto flex p-2">
               {/* hey */}.
-              <div className="my-auto   flex">
-                <div className="grid-cols-3 	grid gap-4 mb-4 border transition ease-in-out my-auto">
+              <div className="my-auto flex ">
+                <div className="grid-cols-2 	grid gap-4 mb-4  transition ease-in-out my-auto ">
                   {elements.map((value, index) => (
                     <Card
+                      deleteClick={() => handleCardDelete(index)}
+                      index={index}
                       key={index + value}
                       heading={value.heading}
                       content={value.description}
