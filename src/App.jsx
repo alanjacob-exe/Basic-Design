@@ -3,158 +3,159 @@ import Card from "./Components/card";
 
 function App() {
   const [checked, setChecked] = useState(false);
-  const [startIndex, setstartIndex] = useState(0);
-  const [displayData, setdisplayData] = useState([]);
+  // const [index, setindex] = useState(0);
+  // const [startIndex, setstartIndex] = useState(0);
+  // const [displayData, setdisplayData] = useState([]);
   const [currentPage, setcurrentPage] = useState(0);
-  const togglestyle = "h-6 w-6 bg-white rounded-full my-auto";
-
-  useEffect(() => {
-    setcurrentPage(startIndex / 2);
-    // handleToggleUpdate();
-  }, [startIndex, displayData]);
-
-  const handleForwardChange = () => {
-    if (startIndex < dummydata.length) {
-      setstartIndex((prevState) => prevState + 2);
-      setdisplayData(
-        dummydata.filter((value, index) => {
-          if (index >= startIndex && index < startIndex + 2) {
-            return value;
-          }
-        })
-      );
-    }
-  };
-  // console.log(currentPage)
-
-  const handleBackwardsChange = () => {
-    if (startIndex > 0) {
-      setstartIndex((prevState) => prevState - 2);
-      setdisplayData(
-        dummydata.filter((value, index) => {
-          if (index >= startIndex - 2 && index < startIndex) {
-            return value;
-          }
-        })
-      );
-    }
-  };
-
+  const togglestyle =
+    "h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200  ";
   const [dummydata, setDummyData] = useState([
-    {
-      heading: "1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in magna. Donec vitae luctus diam. Nam sed pharetra augue, quis molestie nunc. Integer suscipit fermentum nisl, non mollis est condimentum a. Pellentesque neque neque, cursus at lacinia a, vestibulum eget libero. Cras eros urna, gravida id nisi non, rutrum sagittis sem. Nulla facilisi. Nam leo lorem, porttitor eget facilisis at, finibus eu est. Sed velit quam, tempus sit amet sodales quis, semper ut sapien",
-    },
-    {
-      heading: "2",
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).    ",
-    },
-    {
-      heading: "3",
-      description:
-        "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
-    },
-    {
-      heading: "4 ",
-      description:
-        "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
-    },
-    {
-      heading: "5",
-      description:
-        "Nulla lorem lacus, vulputate eu justo vitae, consectetur blandit lacus. Pellentesque id lacus vitae mi consequat gravida. Donec maximus auctor mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus mi eros, condimentum et est sed, scelerisque lacinia diam. Morbi ut ornare quam. Aliquam tristique lectus neque, non pharetra enim efficitur sit amet. Morbi scelerisque venenatis ipsum, mattis pellentesque tellus eleifend nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin vel dictum sem, sed ornare ligula. Quisque at sodales neque. Integer quis varius velit.",
-    },
-    {
-      heading: "6",
-      description:
-        "Proin consequat, magna eu sagittis luctus, enim ex placerat nisl, vulputate condimentum dui dolor at orci. Donec at eros leo. Duis sodales, metus eu ultricies fermentum, elit enim condimentum lectus, a tristique magna augue et dolor. Nulla quis facilisis magna. Nulla et eros posuere, mattis leo in, pretium justo. Maecenas consequat libero vestibulum diam ornare convallis. Vestibulum sodales nec mauris vitae vulputate. Cras pretium augue ac sodales cursus. Duis id dictum mi. Maecenas a mattis eros. Fusce felis leo, laoreet fermentum orci eget, ullamcorper dignissim leo. Nunc urna magna, tincidunt id nibh sed, pretium suscipit augue. Mauris id hendrerit augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus sollicitudin tincidunt pretium.",
-    },
-  ]);
-
-  // console.log(displayData)
-
-  const handleToggleChange = () => {
-    setdisplayData((prevState) => [
-      ...prevState,
+    [
       {
-        heading: "added",
+        heading: "1",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in magna. Donec vitae luctus diam. Nam sed pharetra augue, quis molestie nunc. Integer suscipit fermentum nisl, non mollis est condimentum a. Pellentesque neque neque, cursus at lacinia a, vestibulum eget libero. Cras eros urna, gravida id nisi non, rutrum sagittis sem. Nulla facilisi. Nam leo lorem, porttitor eget facilisis at, finibus eu est. Sed velit quam, tempus sit amet sodales quis, semper ut sapien",
+      },
+      {
+        heading: "2",
+        description:
+          "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).    ",
+      },
+    ],
+    [
+      {
+        heading: "3",
         description:
           "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
       },
       {
-        heading: "added",
+        heading: "4 ",
         description:
           "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
       },
-    ]);
-    console.log(displayData?.length);
+    ],
+    [
+      {
+        heading: "5",
+        description:
+          "Nulla lorem lacus, vulputate eu justo vitae, consectetur blandit lacus. Pellentesque id lacus vitae mi consequat gravida. Donec maximus auctor mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus mi eros, condimentum et est sed, scelerisque lacinia diam. Morbi ut ornare quam. Aliquam tristique lectus neque, non pharetra enim efficitur sit amet. Morbi scelerisque venenatis ipsum, mattis pellentesque tellus eleifend nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin vel dictum sem, sed ornare ligula. Quisque at sodales neque. Integer quis varius velit.",
+      },
+      {
+        heading: "6",
+        description:
+          "Proin consequat, magna eu sagittis luctus, enim ex placerat nisl, vulputate condimentum dui dolor at orci. Donec at eros leo. Duis sodales, metus eu ultricies fermentum, elit enim condimentum lectus, a tristique magna augue et dolor. Nulla quis facilisis magna. Nulla et eros posuere, mattis leo in, pretium justo. Maecenas consequat libero vestibulum diam ornare convallis. Vestibulum sodales nec mauris vitae vulputate. Cras pretium augue ac sodales cursus. Duis id dictum mi. Maecenas a mattis eros. Fusce felis leo, laoreet fermentum orci eget, ullamcorper dignissim leo. Nunc urna magna, tincidunt id nibh sed, pretium suscipit augue. Mauris id hendrerit augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus sollicitudin tincidunt pretium.",
+      },
+    ],
+  ]);
+
+  // console.log(elements.length  );
+  const [elements, setelements] = useState(dummydata[0]);
+  // useEffect(() => {
+  //   setcurrentPage(startIndex / 2);
+  //   // handleToggleUpdate();
+  // }, [startIndex, displayData]);
+
+  const handleForwardChange = () => {
+    if (currentPage <= dummydata.length - 1) {
+      setcurrentPage((prevState) => {
+        if (currentPage < dummydata.length - 1) {
+          const updatedValue = prevState + 1;
+          console.log(updatedValue);
+
+          setelements(dummydata[updatedValue]);
+          return updatedValue;
+        } else {
+          return -1;
+        }
+      });
+    } else {
+      console.log("End Of Array");
+    }
+  };
+
+  const handleBackwardsChange = () => {
+    if (currentPage >= 0) {
+      setcurrentPage((cp) => {
+        if (cp >= 1) {
+          const updatedValue = cp - 1;
+          console.log(updatedValue);
+          setelements(dummydata[updatedValue]);
+          return updatedValue;
+        }
+        return 3;
+      });
+    } else console.log("Reached Initial" + currentPage);
+  };
+
+  // console.log(dummydata);
+
+  const handleToggleChange = () => {
+    // setdisplayData((prevState) => [
+    //   ...prevState,
+    //   {
+    //     heading: "added",
+    //     description:
+    //       "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
+    //   },
+    //   {
+    //     heading: "added",
+    //     description:
+    //       "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
+    //   },
+    // ]);
+    // console.log(displayData?.length);
   };
 
   // console.log([...displayData, ...dummydata.slice(2)]);
 
   const handleClick = () => {
-    if (!checked) {
-      handleToggleChange();
-    }
-    // checked === false ? {handleToggleChange(),handletogg }: setChecked(!checked);
-    setChecked((prevState) => !prevState);
+    // if (!checked) {
+    //   handleToggleChange();
+    // }
+    checked === false ? handleToggleChange() : setChecked(!checked);
+    setChecked(!checked);
   };
 
   const handleDelete = () => {
-    setDummyData([
-      ...dummydata.filter((value, index) => index + 2 < dummydata.length),
-    ]);
+    // setDummyData([
+    //   ...dummydata.filter((value, index) => index + 2 < dummydata.length),
+    // ]);
   };
 
   const handleToggleUpdate = () => {
-    console.log("test");
-    let k = [
-      ...dummydata.filter((value, index) => {
-        if (index + 1 <= currentPage * 2 - 2) return value;
-      }),
-      ...displayData,
-      ...dummydata.filter((value, index) => {
-        if (index + 1 > currentPage * 2) return value;
-      }),
-    ];
-    // console.log(displayData)
-
-    // setDummyData([...k]);
-    // setDummyData(...k)
-
+    // console.log("test");
     // let k = [
-    //   dummydata.filter((value, index) => {
-    //     if (index + 1 > currentPage * 2 || index + 1 <= currentPage * 2 - 2)
-    //       return value;
+    //   ...dummydata.filter((value, index) => {
+    //     if (index + 1 <= currentPage * 2 - 2) return value;
+    //   }),
+    //   ...displayData,
+    //   ...dummydata.filter((value, index) => {
+    //     if (index + 1 > currentPage * 2) return value;
     //   }),
     // ];
-    console.log(k);
+    // console.log(k);
     // setDummyData([...displayData, ...dummydata.slice(2)]);
   };
 
   const handlePop = (params) => {
-    return displayData.filter((item, index) => index != params);
+    // return displayData.filter((item, index) => index != params);
   };
 
   // const handleTextAreaChange = (e, idx) => {};
 
   const handleKey = (e, idx) => {
-    console.log("from handlekey" + e.keyCode);
-    if (e.keyCode == 13) {
-      setDummyData((prevState) =>
-        prevState.map((each, index) =>
-          index == idx ? { ...each, description: e.target.value } : each
-        )
-      );
-      console.log("Enter key pressed");
-      // setshowEdit((prevState) => !prevState);
-    }
-    // console.log("show edit: "+showEdit)
+    // console.log("from handlekey" + e.keyCode);
+    // if (e.keyCode == 13) {
+    //   setDummyData((prevState) =>
+    //     prevState.map((each, index) =>
+    //       index == idx ? { ...each, description: e.target.value } : each
+    //     )
+    //   );
+    //   console.log("Enter key pressed");
+    //   // setshowEdit((prevState) => !prevState);
+    // }
+    // // console.log("show edit: "+showEdit)
   };
-
-  // console.log(dummydata);
 
   return (
     <>
@@ -168,16 +169,16 @@ function App() {
           </div>
 
           <div className=" my-auto ">
-            <div className="w-16 overflow-hidden h-8  border rounded-full flex  bg-black  ">
+            <div
+              className="w-16 overflow-hidden h-8 border-2 rounded-full flex  bg-black  "
+              onClick={handleClick}
+            >
               <div
                 className={`${togglestyle} ${
                   checked
-                    ? " translate-x-9 bg-purple-800"
+                    ? " translate-x-9 bg-primary mr-0.5 border-2"
                     : "bg-gray-400 ml-0.5"
                 }`}
-                onClick={() => {
-                  handleClick();
-                }}
               ></div>
             </div>
           </div>
@@ -203,17 +204,14 @@ function App() {
               </div>
             </div>
             <div className="w-[90%] mx-auto h-full  flex p-2">
-              hey
+              {/* hey */}
               <div className="m-auto flex">
-                {displayData.map((value, index) => (
-                  <div key={index} className="mr-2 w-full h-full">
-                    <Card
-                      index={index}
-                      deleteClick={() => handleUpdate(index, currentPage)}
-                      heading={value?.heading}
-                      content={value?.description}
-                    />
-                  </div>
+                {elements.map((value, index) => (
+                  <Card
+                    key={index + value}
+                    heading={value.heading}
+                    content={value.description}
+                  />
                 ))}
               </div>
             </div>

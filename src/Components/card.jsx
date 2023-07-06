@@ -13,24 +13,21 @@ export default function Card({
   const [textAreaChange, settextAreaChange] = useState("");
   const [showEdit, setshowEdit] = useState(false);
 
-  useEffect(() => {
-    // setshowEdit(false)
-  }, []);
+  // useEffect(() => {
+  //   // setshowEdit(false)
+  // }, []);
 
-  // console.log("show edit: " + deleteClick);
+  // console.log("show edit: " + heading);
 
   const style =
-    "w-full bg-white border-primary border rounded-md  h-44  transition flex flex-col ease-in-out";
+    "w-full bg-white border-primary border rounded-md  h-44  transition-transform flex flex-col ease-in-out";
   return (
     <main className={`${style}`}>
       <div className="border h-10 w-full flex ">
         <div className="m-auto  text-black font-semibold text-md ">
           {heading}
         </div>
-        <div
-          className="my-auto cursor-pointer"
-          onClick={deleteClick}
-        >
+        <div className="my-auto cursor-pointer" onClick={deleteClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="icon icon-tabler icon-tabler-share hover:stroke-red-500 transition ease-in-out"
