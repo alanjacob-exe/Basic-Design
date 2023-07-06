@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "./Components/card";
 
 function App() {
@@ -7,6 +7,20 @@ function App() {
   // const [startIndex, setstartIndex] = useState(0);
   // const [displayData, setdisplayData] = useState([]);
   const [currentPage, setcurrentPage] = useState(0);
+
+  const [newArray, setnewArray] = useState([
+    {
+      heading: "added",
+      description:
+        "        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
+    },
+    {
+      heading: "added",
+      description:
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).    ",
+    },
+  ]);
+
   const togglestyle =
     "h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200  ";
   const [dummydata, setDummyData] = useState([
@@ -51,6 +65,7 @@ function App() {
   const [elements, setelements] = useState(dummydata[0]);
 
   const handleForwardChange = () => {
+    setChecked(false);
     if (currentPage <= dummydata.length - 1) {
       setcurrentPage((prevState) => {
         if (currentPage < dummydata.length - 1) {
@@ -69,6 +84,8 @@ function App() {
   };
 
   const handleBackwardsChange = () => {
+    setChecked(false);
+
     if (currentPage >= 0) {
       setcurrentPage((cp) => {
         if (cp >= 1) {
@@ -82,24 +99,69 @@ function App() {
     } else console.log("Reached Initial" + currentPage);
   };
 
+  const handleToggleAdd = () => {
+    setDummyData((prevState) =>
+      prevState.map((value, index) => {
+        if (index == currentPage) {
+          let k = [...newArray, ...value];
+          setelements(k);
+          return k;
+        }
+        return value;
+      })
+    );
+  };
   // console.log(dummydata);
 
-  const handleToggleChange = () => {
-    // setdisplayData((prevState) => [
-    //   ...prevState,
-    //   {
-    //     heading: "added",
-    //     description:
-    //       "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
-    //   },
-    //   {
-    //     heading: "added",
-    //     description:
-    //       "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
-    //   },
-    // ]);
-    // console.log(displayData?.length);
+  const handleToggleDelete = () => {
+    setDummyData((prevState) =>
+      prevState.map((value, index) => {
+        if (index == currentPage) {
+          let k = value.filter((value, index) => {
+            if (index >= 2) {
+              return value;
+            }
+          });
+          setelements(k);
+          return k;
+        }
+        return value;
+      })
+    );
   };
+
+  const handleAddMore = () => {
+    console.log("clicked");
+    setDummyData((prevState) =>
+      prevState.map((value, index) => {
+        if (index == currentPage) {
+          let k = [...value,...newArray];
+          setelements(k);
+          return k;
+        }
+        return value;
+      })
+    );
+  };
+
+  // console.log(dummydata);
+
+  // const handleToggleChange = () => {
+  //   // setdisplayData((prevState) => [
+  //   //   ...prevState,
+  //   //   {
+  //   //     heading: "added",
+  //   //     description:
+  //   //       "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
+  //   //   },
+  //   //   {
+  //   //     heading: "added",
+  //   //     description:
+  //   //       "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
+  //   //   },
+  //   // ]);
+  //   // console.log(displayData?.length);
+  // };
 
   // console.log([...displayData, ...dummydata.slice(2)]);
 
@@ -107,29 +169,14 @@ function App() {
     // if (!checked) {
     //   handleToggleChange();
     // }
-    checked === false ? handleToggleChange() : setChecked(!checked);
+    checked === false ? handleToggleAdd() : handleToggleDelete();
     setChecked(!checked);
   };
 
-  const handleDelete = () => {
+  const handle = () => {
     // setDummyData([
     //   ...dummydata.filter((value, index) => index + 2 < dummydata.length),
     // ]);
-  };
-
-  const handleToggleUpdate = () => {
-    // console.log("test");
-    // let k = [
-    //   ...dummydata.filter((value, index) => {
-    //     if (index + 1 <= currentPage * 2 - 2) return value;
-    //   }),
-    //   ...displayData,
-    //   ...dummydata.filter((value, index) => {
-    //     if (index + 1 > currentPage * 2) return value;
-    //   }),
-    // ];
-    // console.log(k);
-    // setDummyData([...displayData, ...dummydata.slice(2)]);
   };
 
   const handlePop = (params) => {
@@ -202,18 +249,43 @@ function App() {
               </div>
             </div>
             <div className="w-[90%] mx-auto h-full  flex p-2">
-              {/* hey */}
-              <div className="m-auto flex">
-                {elements.map((value, index) => (
-                  <Card
-                    key={index + value}
-                    heading={value.heading}
-                    content={value.description}
-                  />
-                ))}
+              {/* hey */}.
+              <div className="my-auto   flex">
+                <div className="grid-cols-3 	grid gap-4 mb-4 border transition ease-in-out my-auto">
+                  {elements.map((value, index) => (
+                    <Card
+                      key={index + value}
+                      heading={value.heading}
+                      content={value.description}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="w-[5%] h-full  flex">
+            <div className="w-[7%] h-full   bg-  flex flex-col">
+              <div
+                className="w-full h-10 border border-primary rounded-md flex hover:bg-black-200 transition ease-in-out delay-300 hover:stroke-[2.5] hover:text-lg "
+                onClick={handleAddMore}
+              >
+                <div className="m-auto text-white font-semibold  flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-plus  my-auto "
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    stroke="#fff"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 5l0 14" />
+                    <path d="M5 12l14 0" />
+                  </svg>
+                  ADD
+                </div>
+              </div>
               <div
                 className="m-auto h-12 cursor-pointer"
                 onClick={handleForwardChange}
@@ -234,7 +306,7 @@ function App() {
                   <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />
                 </svg>
               </div>
-            </div>{" "}
+            </div>
           </div>
         </div>
         {/* <div className="w-1/2 h-1/2 border border-primary m-auto"></div> */}

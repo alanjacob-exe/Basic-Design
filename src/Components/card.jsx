@@ -82,7 +82,7 @@ export default function Card({
             className="w-full h-full"
           >
             {/* showMore ? content?.slice(0, 200) : content */}
-            {content.length < 200
+            {content?.length < 200
               ? content
               : showMore
               ? content?.slice(0, 200)
@@ -92,7 +92,11 @@ export default function Card({
               onClick={() => setshowMore(!showMore)}
             >
               {/* {showMore ? "Show less" : "...Show More"} */}
-              {content.length < 200 ? "." : showMore ? "Show More" : "Show Less"}
+              {content?.length < 200
+                ? "."
+                : showMore
+                ? "Show More"
+                : "Show Less"}
             </a>
           </div>
         )}
