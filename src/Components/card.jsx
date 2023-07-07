@@ -10,8 +10,17 @@ export default function Card({
   keyup,
 }) {
   const [showMore, setshowMore] = useState(true);
-  const [textAreaChange, settextAreaChange] = useState("");
+  const [textAreaChange, settextAreaChange] = useState(content);
   const [showEdit, setshowEdit] = useState(false);
+
+  const handleTextClick = (e) => {
+    e.stopPropagation();
+    console.log("clicked Button");
+  };
+
+  const handleBlurChange = () => {
+    console.log("ddd");
+  };
 
   // useEffect(() => {
   //   // setshowEdit(false)
@@ -27,10 +36,7 @@ export default function Card({
         <div className="m-auto  text-black font-semibold text-md ">
           {heading}
         </div>
-        <div
-          className="my-auto cursor-pointer"
-          onClick={deleteClick}
-        >
+        <div className="my-auto cursor-pointer" onClick={deleteClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="icon icon-tabler icon-tabler-share hover:stroke-red-500 transition ease-in-out"
@@ -56,34 +62,23 @@ export default function Card({
             onDoubleClick={() => setshowEdit(!showEdit)}
           >
             <textarea
-              value={textAreaChange}
-              onKeyUp={keyup}
-              onKeyDown={(e) => {
-                // console.log("from keydown" + e.keyCode);
-                if (e.keyCode === 13) {
-                  // setshowEdit((prevState) => !prevState);
-                  // console.log("keydown");
-                }
-              }}
+              onClick={handleTextClick}
+              value={content}
               onChange={(e) => {
                 // console.log(e);
                 settextAreaChange(e.target.value);
               }}
+              // onFocus={() => console.log("hry")}
+              onBlur={() => setshowEdit(false)}
               rows="20"
               cols="50"
-              className=" bg-white break-words w-full h-fullborder"
+              className=" bg-white break-words w-full h-full border"
             >
               {content}
             </textarea>
           </div>
         ) : (
-          <div
-            onDoubleClick={() => {
-              settextAreaChange(content);
-              setshowEdit(!showEdit);
-            }}
-            className="w-full h-full"
-          >
+          <div onClick={() => setshowEdit(true)} className="w-full h-full">
             {/* showMore ? content?.slice(0, 200) : content */}
             {content?.length < 200
               ? content
