@@ -1,37 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export default function Card({
   index,
-
+  onchange,
   heading,
   content,
   deleteClick,
-  dblclick,
-  keydown,
-  keyup,
 }) {
   const [showMore, setshowMore] = useState(true);
-  const [textAreaChange, settextAreaChange] = useState(content);
   const [showEdit, setshowEdit] = useState(false);
 
-  const handleTextClick = (e) => {
-    e.stopPropagation();
-    console.log("clicked Button");
-  };
-
-  const handleBlurChange = () => {
-    console.log("ddd");
-  };
-
-  // useEffect(() => {
-  //   // setshowEdit(false)
-  // }, []);
-
-  // console.log("show edit: " + heading);
-
-  const style =
-    "w-full bg-white border-primary border rounded-md  h-44  transition-transform flex flex-col ease-in-out";
   return (
-    <main className={`${style}`}>
+    <main className="w-full bg-white border-primary border rounded-md  h-44  transition-transform flex flex-col ease-in-out">
       <div className="border h-10 w-full flex ">
         <div className="m-auto  text-black font-semibold text-md ">
           {heading}
@@ -62,20 +41,12 @@ export default function Card({
             onDoubleClick={() => setshowEdit(!showEdit)}
           >
             <textarea
-              onClick={handleTextClick}
               value={content}
-              onChange={(e) => {
-                // console.log(e);
-                settextAreaChange(e.target.value);
-              }}
-              // onFocus={() => console.log("hry")}
+              onChange={onchange}
               onBlur={() => setshowEdit(false)}
-              rows="20"
-              cols="50"
+              
               className=" bg-white break-words w-full h-full border"
-            >
-              {content}
-            </textarea>
+            />
           </div>
         ) : (
           <div onClick={() => setshowEdit(true)} className="w-full h-full">

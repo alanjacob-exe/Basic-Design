@@ -160,6 +160,79 @@ function App() {
       })
     );
   };
+  console.log(dummydata);
+
+  const handleChildTextChange = (e, pos) => {
+    setDummyData((prevState) => {
+      return prevState.map((value, index) => {
+        if (index === currentPage) {
+          let k = value.map((each, idx) => {
+            if (idx === pos) {
+              let k = {
+                heading: each.heading,
+                description: e.target.value,
+              };
+
+              return k;
+            }
+            console.log(each);
+
+            return each;
+          });
+          setelements(k);
+          console.log(k);
+          return k;
+        }
+
+        return value;
+      });
+    });
+  };
+
+  // setDummyData((prevState) => {
+  //   prevState.map((value, index) => {
+  //     if (index === currentPage) {
+  //       let k = value;
+  //       k.map((each, idx) => {
+  //         if (idx == pos) {
+  //           let v = {
+  //             heading: each.heading,
+  //             description: e.target.value,
+  //           };
+  //           console.log(v);
+
+  //           return v;
+  //         }
+  //         return each;
+  //         // console.log(each)
+  //       });
+  //       console.log(k);
+  //       return k;
+  //     }
+  //     return value;
+  //   });
+  // });
+  // setDummyData((prevState) =>
+  //   prevState.map((value, index) => {
+  //     if (index == currentPage) {
+  //       value.map((each, idx) => {
+  //         console.log(value);
+  //         if (idx == pos) {
+  //           let k = {
+  //             heading: each.heading,
+  //             description: e.target.value,
+  //           };
+  //           return k;
+  //         }
+
+  //         return each;
+  //       });
+  //     }
+  //     return value;
+  //   })
+  // );
+  // setDummyData((prevState) => {});
+  // };
 
   // console.log(dummydata);
 
@@ -269,6 +342,7 @@ function App() {
                 <div className="grid-cols-2 	grid gap-4 mb-4  transition ease-in-out my-auto ">
                   {elements.map((value, index) => (
                     <Card
+                      onchange={(e) => handleChildTextChange(e, index)}
                       deleteClick={() => handleCardDelete(index)}
                       index={index}
                       key={index + value}
