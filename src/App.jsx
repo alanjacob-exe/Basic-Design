@@ -58,25 +58,15 @@ function App() {
     ],
   ]);
 
-  const handleForwardChange = () => {
-    setChecked(false); // to change the toggle back to disabled when changing pages
-    setcurrentPage(currentPage + 1 === dummydata.length ? 0 : currentPage + 1);
-  };
-
-  const handleBackwardsChange = () => {
-    setChecked(false); // to change the toggle back to disabled when changing pages
-    setcurrentPage(currentPage === 0 ? dummydata.length - 1 : currentPage - 1);
-  };
-
   const handleToggleChange = (flag) => {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index === currentPage) {
-          if (flag === 1) {
+          if (flag === false) {
             //checking for flag to understand whether items should be deleted or added
             return [...newArray, ...value]; // to place the new items before the existing cards
           }
-          if (flag == 2) {
+          if (flag == true) {
             // if the flag is 2 the first two elements are deleted
             return value.filter((value, index) => {
               if (index >= 2) {
@@ -90,28 +80,22 @@ function App() {
     );
   };
 
-  const handleAddMore = () => {
-    // called when the  add button is clicked
+  const handleCardChange = (cardIndex) => {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          return [...value, ...newArray]; //to add data after the existing data
-        }
-        return value;
-      })
-    );
-  };
-
-  const handleCardDelete = (idx) => {
-    setDummyData((prevState) =>
-      prevState.map((value, index) => {
-        if (index == currentPage) {
-          return value.filter((value, index) => {
-            // returns all other data other than the index
-            if (index != idx) {
-              return value;
-            }
-          });
+          if (!cardIndex) {
+            console.log("Adding Elements");
+            return [...value, ...newArray];
+          }
+          if (cardIndex) {
+            return value.filter((value, index) => {
+              // returns all other data other than the index
+              if (index != cardIndex) {
+                return value;
+              }
+            });
+          } else return undefined;
         }
         return value;
       })
@@ -140,7 +124,7 @@ function App() {
 
   const handleClick = () => {
     // used to handle toggleclicks
-    !checked ? handleToggleChange(1) : handleToggleChange(2);
+    handleToggleChange(checked);
     setChecked(!checked);
   };
 
@@ -175,7 +159,12 @@ function App() {
             <div className="w-[5%] h-full  flex">
               <div
                 className="m-auto h-12 cursor-pointer"
-                onClick={handleBackwardsChange}
+                onClick={() => {
+                  setChecked(false); // to change the toggle back to disabled when changing pages
+                  setcurrentPage(
+                    currentPage === 0 ? dummydata.length - 1 : currentPage - 1
+                  );
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +192,7 @@ function App() {
                       onChange={(e) =>
                         handleChildTextChange(e.target.value, index)
                       }
-                      deleteClick={() => handleCardDelete(index)}
+                      deleteClick={() => handleCardChange(index)}
                       heading={eachCardValue.heading}
                       content={eachCardValue.description}
                     />
@@ -214,7 +203,7 @@ function App() {
             <div className="w-[7%] h-full   bg-  flex flex-col">
               <div
                 className="w-full h-10 border border-primary rounded-md stroke-[1.5] flex hover:bg-black-200 transition ease-in-out delay-300 hover:stroke-[2.5] "
-                onClick={handleAddMore}
+                onClick={() => handleCardChange()}
               >
                 <div className="m-auto text-white font-semibold  flex">
                   <svg
@@ -237,7 +226,12 @@ function App() {
               </div>
               <div
                 className="m-auto h-12 cursor-pointer"
-                onClick={handleForwardChange}
+                onClick={() => {
+                  setChecked(false); // to change the toggle back to disabled when changing pages
+                  setcurrentPage(
+                    currentPage + 1 === dummydata.length ? 0 : currentPage + 1
+                  );
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
