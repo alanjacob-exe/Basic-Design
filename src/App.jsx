@@ -19,8 +19,6 @@ function App() {
     },
   ];
 
-  const togglestyle =
-    "h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200  ";
   const [dummydata, setDummyData] = useState([
     [
       {
@@ -60,8 +58,6 @@ function App() {
     ],
   ]);
 
-  const elements = dummydata[currentPage]; // to select and map the card component
-
   const handleForwardChange = () => {
     setChecked(false); // to change the toggle back to disabled when changing pages
     setcurrentPage(currentPage + 1 === dummydata.length ? 0 : currentPage + 1);
@@ -72,32 +68,22 @@ function App() {
     setcurrentPage(currentPage === 0 ? dummydata.length - 1 : currentPage - 1);
   };
 
-  const handleToggleAdd = () => {
-    // invokes when the toggle is enabled
+  const handleToggleChange = (flag) => {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
-        if (index == currentPage) {
-          let k = [...newArray, ...value]; // to place the new items before the existing cards
-          // setelements(k);
-          return k;
-        }
-        return value;
-      })
-    );
-  };
-
-  const handleToggleDelete = () => {
-    // invoked when the toggle is disabled
-    setDummyData((prevState) =>
-      prevState.map((value, index) => {
-        if (index == currentPage) {
-          let k = value.filter((value, index) => {
-            if (index >= 2) {
-              return value;
-            }
-          });
-          // setelements(k);
-          return k;
+        if (index === currentPage) {
+          if (flag === 1) {
+            //checking for flag to understand whether items should be deleted or added
+            return [...newArray, ...value]; // to place the new items before the existing cards
+          }
+          if (flag == 2) {
+            // if the flag is 2 the first two elements are deleted
+            return value.filter((value, index) => {
+              if (index >= 2) {
+                return value;
+              }
+            });
+          } else return undefined;
         }
         return value;
       })
@@ -105,13 +91,11 @@ function App() {
   };
 
   const handleAddMore = () => {
-    // called whrn the  add button is clicked
+    // called when the  add button is clicked
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          let k = [...value, ...newArray]; //to add data after the existing data
-          // setelements(k);
-          return k;
+          return [...value, ...newArray]; //to add data after the existing data
         }
         return value;
       })
@@ -122,20 +106,19 @@ function App() {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          let k = value.filter((value, index) => {
+          return value.filter((value, index) => {
             // returns all other data other than the index
             if (index != idx) {
               return value;
             }
           });
-          return k;
         }
         return value;
       })
     );
   };
 
-  const handleChildTextChange = (e, pos) => {
+  const handleChildTextChange = (updatedContent, pos) => {
     // used to handle text change in child component
     setDummyData([
       ...dummydata.map((eachDummyData, index) => {
@@ -144,7 +127,7 @@ function App() {
             if (index === pos) {
               return {
                 ...eachValue,
-                description: e.target.value,
+                description: updatedContent,
               };
             }
             return eachValue;
@@ -157,7 +140,7 @@ function App() {
 
   const handleClick = () => {
     // used to handle toggleclicks
-    !checked ? handleToggleAdd() : handleToggleDelete();
+    !checked ? handleToggleChange(1) : handleToggleChange(2);
     setChecked(!checked);
   };
 
@@ -178,7 +161,7 @@ function App() {
               onClick={handleClick}
             >
               <div
-                className={`${togglestyle} ${
+                className={`h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200   ${
                   checked
                     ? " translate-x-9 bg-purple-700 mr-0.5 border-2 "
                     : "bg-gray-400 ml-0.5"
@@ -214,19 +197,17 @@ function App() {
               {/* hey */}
               <div className="my-auto flex ">
                 <div className="grid-cols-2 	grid gap-4 mb-4  transition ease-in-out my-auto ">
-                  {dummydata.map((value, index) => {
-                    if (index === currentPage) {
-                      return value.map((eachCardData, index) => (
-                        <Card
-                          key={index}
-                          onchange={(e) => handleChildTextChange(e, index)}
-                          deleteClick={() => handleCardDelete(index)}
-                          heading={eachCardData.heading}
-                          content={eachCardData.description}
-                        />
-                      ));
-                    }
-                  })}
+                  {dummydata[currentPage].map((eachCardValue, index) => (
+                    <Card
+                      key={index}
+                      onChange={(e) =>
+                        handleChildTextChange(e.target.value, index)
+                      }
+                      deleteClick={() => handleCardDelete(index)}
+                      heading={eachCardValue.heading}
+                      content={eachCardValue.description}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
