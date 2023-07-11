@@ -2,24 +2,22 @@ import { useState } from "react";
 import Card from "./Components/card";
 
 function App() {
-  const [checked, setChecked] = useState(false);
-  // const [index, setindex] = useState(0);
-  // const [startIndex, setstartIndex] = useState(0);
-  // const [displayData, setdisplayData] = useState([]);
-  const [currentPage, setcurrentPage] = useState(0);
+  const [checked, setChecked] = useState(false); // to hold the toggle state
 
-  const [newArray, setnewArray] = useState([
+  const [currentPage, setcurrentPage] = useState(0); // to understand which section needs to be modified
+
+  const newArray = [
     {
       heading: "added",
       description:
-        "        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
     },
     {
       heading: "added",
       description:
         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).    ",
     },
-  ]);
+  ];
 
   const togglestyle =
     "h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200  ";
@@ -28,7 +26,7 @@ function App() {
       {
         heading: "1",
         description:
-          "        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi at tortor tincidunt ornare. Mauris ante lorem, pretium quis posuere vel, dignissim in mag diam",
       },
       {
         heading: "2",
@@ -62,58 +60,34 @@ function App() {
     ],
   ]);
 
-  const [elements, setelements] = useState(dummydata[0]);
+  const elements = dummydata[currentPage]; // to select and map the card component
 
   const handleForwardChange = () => {
-    setChecked(false);
-    if (currentPage <= dummydata.length - 1) {
-      setcurrentPage((prevState) => {
-        if (currentPage < dummydata.length - 1) {
-          const updatedValue = prevState + 1;
-          console.log(updatedValue);
-
-          setelements(dummydata[updatedValue]);
-          return updatedValue;
-        } else {
-          return -1;
-        }
-      });
-    } else {
-      console.log("End Of Array");
-    }
+    setChecked(false); // to change the toggle back to disabled when changing pages
+    setcurrentPage(currentPage + 1 === dummydata.length ? 0 : currentPage + 1);
   };
 
   const handleBackwardsChange = () => {
-    setChecked(false);
-
-    if (currentPage >= 0) {
-      setcurrentPage((cp) => {
-        if (cp >= 1) {
-          const updatedValue = cp - 1;
-          console.log(updatedValue);
-          setelements(dummydata[updatedValue]);
-          return updatedValue;
-        }
-        return 3;
-      });
-    } else console.log("Reached Initial" + currentPage);
+    setChecked(false); // to change the toggle back to disabled when changing pages
+    setcurrentPage(currentPage === 0 ? dummydata.length - 1 : currentPage - 1);
   };
 
   const handleToggleAdd = () => {
+    // invokes when the toggle is enabled
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          let k = [...newArray, ...value];
-          setelements(k);
+          let k = [...newArray, ...value]; // to place the new items before the existing cards
+          // setelements(k);
           return k;
         }
         return value;
       })
     );
   };
-  // console.log(dummydata);
 
   const handleToggleDelete = () => {
+    // invoked when the toggle is disabled
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
@@ -122,7 +96,7 @@ function App() {
               return value;
             }
           });
-          setelements(k);
+          // setelements(k);
           return k;
         }
         return value;
@@ -131,12 +105,12 @@ function App() {
   };
 
   const handleAddMore = () => {
-    console.log("clicked");
+    // called whrn the  add button is clicked
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          let k = [...value, ...newArray];
-          setelements(k);
+          let k = [...value, ...newArray]; //to add data after the existing data
+          // setelements(k);
           return k;
         }
         return value;
@@ -149,142 +123,42 @@ function App() {
       prevState.map((value, index) => {
         if (index == currentPage) {
           let k = value.filter((value, index) => {
+            // returns all other data other than the index
             if (index != idx) {
               return value;
             }
           });
-          setelements(k);
           return k;
         }
         return value;
       })
     );
   };
-  console.log(dummydata);
 
   const handleChildTextChange = (e, pos) => {
-    setDummyData((prevState) => {
-      return prevState.map((value, index) => {
+    // used to handle text change in child component
+    setDummyData([
+      ...dummydata.map((eachDummyData, index) => {
         if (index === currentPage) {
-          let k = value.map((each, idx) => {
-            if (idx === pos) {
-              let k = {
-                heading: each.heading,
+          return eachDummyData.map((eachValue, index) => {
+            if (index === pos) {
+              return {
+                ...eachValue,
                 description: e.target.value,
               };
-
-              return k;
             }
-            console.log(each);
-
-            return each;
+            return eachValue;
           });
-          setelements(k);
-          console.log(k);
-          return k;
         }
-
-        return value;
-      });
-    });
+        return eachDummyData;
+      }),
+    ]);
   };
-
-  // setDummyData((prevState) => {
-  //   prevState.map((value, index) => {
-  //     if (index === currentPage) {
-  //       let k = value;
-  //       k.map((each, idx) => {
-  //         if (idx == pos) {
-  //           let v = {
-  //             heading: each.heading,
-  //             description: e.target.value,
-  //           };
-  //           console.log(v);
-
-  //           return v;
-  //         }
-  //         return each;
-  //         // console.log(each)
-  //       });
-  //       console.log(k);
-  //       return k;
-  //     }
-  //     return value;
-  //   });
-  // });
-  // setDummyData((prevState) =>
-  //   prevState.map((value, index) => {
-  //     if (index == currentPage) {
-  //       value.map((each, idx) => {
-  //         console.log(value);
-  //         if (idx == pos) {
-  //           let k = {
-  //             heading: each.heading,
-  //             description: e.target.value,
-  //           };
-  //           return k;
-  //         }
-
-  //         return each;
-  //       });
-  //     }
-  //     return value;
-  //   })
-  // );
-  // setDummyData((prevState) => {});
-  // };
-
-  // console.log(dummydata);
-
-  // const handleToggleChange = () => {
-  //   // setdisplayData((prevState) => [
-  //   //   ...prevState,
-  //   //   {
-  //   //     heading: "added",
-  //   //     description:
-  //   //       "Cras dignissim gravida ligula at pharetra. Nullam fermentum maximus dui vel fringilla. Nulla suscipit turpis non justo varius, non tempus quam iaculis. Vestibulum dictum finibus nisl, ac condimentum lorem rhoncus nec. Nunc purus justo, aliquet ac dignissim eu, viverra a diam. Sed auctor vel purus vitae ullamcorper. In hac habitasse platea dictumst.",
-  //   //   },
-  //   //   {
-  //   //     heading: "added",
-  //   //     description:
-  //   //       "Sed vitae viverra velit. Phasellus ante sem, imperdiet nec ante id, interdum euismod turpis. Aenean porta auctor velit sed vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec tincidunt ullamcorper neque, nec molestie sem auctor eu. Nunc suscipit tortor mollis semper placerat. Aliquam faucibus fermentum tempus. In sagittis fermentum odio, eget consectetur elit egestas non. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis vel urna sit amet massa rhoncus vulputate a sed elit.",
-  //   //   },
-  //   // ]);
-  //   // console.log(displayData?.length);
-  // };
-
-  // console.log([...displayData, ...dummydata.slice(2)]);
 
   const handleClick = () => {
-    // if (!checked) {
-    //   handleToggleChange();
-    // }
-    checked === false ? handleToggleAdd() : handleToggleDelete();
+    // used to handle toggleclicks
+    !checked ? handleToggleAdd() : handleToggleDelete();
     setChecked(!checked);
-  };
-
-  const handle = () => {
-    // setDummyData([
-    //   ...dummydata.filter((value, index) => index + 2 < dummydata.length),
-    // ]);
-  };
-
-  const handlePop = (params) => {};
-
-  // const handleTextAreaChange = (e, idx) => {};
-
-  const handleKey = (e, idx) => {
-    // console.log("from handlekey" + e.keyCode);
-    // if (e.keyCode == 13) {
-    //   setDummyData((prevState) =>
-    //     prevState.map((each, index) =>
-    //       index == idx ? { ...each, description: e.target.value } : 20
-    //     )
-    //   );
-    //   console.log("Enter key pressed");
-    //   // setshowEdit((prevState) => !prevState);
-    // }
-    // // console.log("show edit: "+showEdit)
   };
 
   return (
@@ -306,7 +180,7 @@ function App() {
               <div
                 className={`${togglestyle} ${
                   checked
-                    ? " translate-x-9 bg-primary mr-0.5 border-2"
+                    ? " translate-x-9 bg-purple-700 mr-0.5 border-2 "
                     : "bg-gray-400 ml-0.5"
                 }`}
               ></div>
@@ -340,22 +214,25 @@ function App() {
               {/* hey */}
               <div className="my-auto flex ">
                 <div className="grid-cols-2 	grid gap-4 mb-4  transition ease-in-out my-auto ">
-                  {elements.map((value, index) => (
-                    <Card
-                      onchange={(e) => handleChildTextChange(e, index)}
-                      deleteClick={() => handleCardDelete(index)}
-                      index={index}
-                      key={index + value}
-                      heading={value.heading}
-                      content={value.description}
-                    />
-                  ))}
+                  {dummydata.map((value, index) => {
+                    if (index === currentPage) {
+                      return value.map((eachCardData, index) => (
+                        <Card
+                          key={index}
+                          onchange={(e) => handleChildTextChange(e, index)}
+                          deleteClick={() => handleCardDelete(index)}
+                          heading={eachCardData.heading}
+                          content={eachCardData.description}
+                        />
+                      ));
+                    }
+                  })}
                 </div>
               </div>
             </div>
             <div className="w-[7%] h-full   bg-  flex flex-col">
               <div
-                className="w-full h-10 border border-primary rounded-md flex hover:bg-black-200 transition ease-in-out delay-300 hover:stroke-[2.5] hover:text-lg "
+                className="w-full h-10 border border-primary rounded-md stroke-[1.5] flex hover:bg-black-200 transition ease-in-out delay-300 hover:stroke-[2.5] "
                 onClick={handleAddMore}
               >
                 <div className="m-auto text-white font-semibold  flex">
@@ -392,7 +269,6 @@ function App() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  {" "}
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />
                 </svg>

@@ -1,21 +1,28 @@
 import { useState } from "react";
 export default function Card({
-  index,
   onchange,
   heading,
   content,
   deleteClick,
+  index,
 }) {
-  const [showMore, setshowMore] = useState(true);
-  const [showEdit, setshowEdit] = useState(false);
+  const [showMore, setshowMore] = useState(true); // to check if the show more button should be displayed
+  const [showEdit, setshowEdit] = useState(false); // to check if text area should be visble
 
+  const handleShowEdit = (e) => {
+    setshowEdit(false);
+  };
+
+  const handleShowMoreClick = (e) => {
+    setshowMore(!showMore);
+  };
   return (
-    <main className="w-full bg-white border-primary border rounded-md  h-44  transition-transform flex flex-col ease-in-out">
+    <main className="w-full bg-white border-primary border rounded-md overflow-hidden focus:ring-2 focus:ring-primary h-44  transition-transform flex flex-col ease-in-out">
       <div className="border h-10 w-full flex ">
         <div className="m-auto  text-black font-semibold text-md ">
           {heading}
         </div>
-        <div className="my-auto cursor-pointer" onClick={deleteClick}>
+        <div className="my-auto cursor-pointer mr-2 " onClick={deleteClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="icon icon-tabler icon-tabler-share hover:stroke-red-500 transition ease-in-out"
@@ -35,30 +42,22 @@ export default function Card({
         </div>
       </div>
       <div className="w-full h-full flex border  text-black px-3 overflow-y-auto ">
-        {showEdit ? (
-          <div
-            className="w-full h-full flex  break-words"
-            onDoubleClick={() => setshowEdit(!showEdit)}
-          >
+        {showEdit ? ( //
+          <div className="w-full h-full flex  break-words">
             <textarea
               value={content}
               onChange={onchange}
               onBlur={() => setshowEdit(false)}
-              
               className=" bg-white break-words w-full h-full border"
             />
           </div>
         ) : (
           <div onClick={() => setshowEdit(true)} className="w-full h-full">
             {/* showMore ? content?.slice(0, 200) : content */}
-            {content?.length < 200
-              ? content
-              : showMore
-              ? content?.slice(0, 200)
-              : content}
+            {showMore ? content?.slice(0, 200) : content}
             <a
               className="ml-1 text-blue-400 cursor-pointer"
-              onClick={() => setshowMore(!showMore)}
+              onClick={handleShowMoreClick}
             >
               {/* {showMore ? "Show less" : "...Show More"} */}
               {content?.length < 200
