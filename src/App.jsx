@@ -58,15 +58,15 @@ function App() {
     ],
   ]);
 
-  const handleToggleChange = (flag) => {
+  const handleToggleChange = () => {
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index === currentPage) {
-          if (flag === false) {
+          if (!checked) {
             //checking for flag to understand whether items should be deleted or added
             return [...newArray, ...value]; // to place the new items before the existing cards
           }
-          if (flag == true) {
+          if (checked) {
             // if the flag is 2 the first two elements are deleted
             return value.filter((value, index) => {
               if (index >= 2) {
@@ -80,15 +80,18 @@ function App() {
     );
   };
 
-  const handleCardChange = (cardIndex) => {
+  const handleCardChange = ({ isDelete = false, cardIndex = null }) => {
+    //uses new flag isDelete to delete items from array
+
     setDummyData((prevState) =>
       prevState.map((value, index) => {
         if (index == currentPage) {
-          if (!cardIndex) {
-            console.log("Adding Elements");
+          if (!isDelete) {
+            //if the flag is false new card will be added to the end of the array
             return [...value, ...newArray];
           }
-          if (cardIndex) {
+          if (isDelete) {
+            // if the flag is true new card will be added to the start of the array
             return value.filter((value, index) => {
               // returns all other data other than the index
               if (index != cardIndex) {
@@ -102,16 +105,16 @@ function App() {
     );
   };
 
-  const handleChildTextChange = (updatedContent, pos) => {
+  const handleChildTextChange = ({ newTargetValue, position }) => {
     // used to handle text change in child component
     setDummyData([
       ...dummydata.map((eachDummyData, index) => {
         if (index === currentPage) {
           return eachDummyData.map((eachValue, index) => {
-            if (index === pos) {
+            if (index === position) {
               return {
                 ...eachValue,
-                description: updatedContent,
+                description: newTargetValue,
               };
             }
             return eachValue;
@@ -120,12 +123,6 @@ function App() {
         return eachDummyData;
       }),
     ]);
-  };
-
-  const handleClick = () => {
-    // used to handle toggleclicks
-    handleToggleChange(checked);
-    setChecked(!checked);
   };
 
   return (
@@ -142,7 +139,10 @@ function App() {
           <div className=" my-auto ">
             <div
               className="w-16 overflow-hidden h-8 border-2 rounded-full flex  bg-black  "
-              onClick={handleClick}
+              onClick={() => {
+                handleToggleChange(checked);
+                setChecked(!checked);
+              }}
             >
               <div
                 className={`h-6 w-6 bg-white rounded-full my-auto focus:ring-2 transition-delay-300 ease-in-out duration-200   ${
@@ -190,9 +190,14 @@ function App() {
                     <Card
                       key={index}
                       onChange={(e) =>
-                        handleChildTextChange(e.target.value, index)
+                        handleChildTextChange({
+                          newTargetValue: e.target.value,
+                          position: index,
+                        })
                       }
-                      deleteClick={() => handleCardChange(index)}
+                      deleteClick={() =>
+                        handleCardChange({ isDelete: true, cardIndex: index })
+                      }
                       heading={eachCardValue.heading}
                       content={eachCardValue.description}
                     />
@@ -203,7 +208,7 @@ function App() {
             <div className="w-[7%] h-full   bg-  flex flex-col">
               <div
                 className="w-full h-10 border border-primary rounded-md stroke-[1.5] flex hover:bg-black-200 transition ease-in-out delay-300 hover:stroke-[2.5] "
-                onClick={() => handleCardChange()}
+                onClick={() => handleCardChange({})}
               >
                 <div className="m-auto text-white font-semibold  flex">
                   <svg
